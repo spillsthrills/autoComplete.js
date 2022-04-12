@@ -1,3 +1,5 @@
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -264,12 +266,28 @@
         return character;
       }).join("");
       if (cursor === qLength) return match;
+    } else if (mode === "multiple") {
+      var _match2 = '';
+      query.split(' ').forEach(function (sStr) {
+        var _match = nRecord.indexOf(sStr);
+        if (~_match) {
+          query = record.substring(_match, _match + query.length);
+          if (_match2.length) {
+            _match = _match2.indexOf(sStr);
+            query = _match2.substring(_match, _match + sStr.length);
+            record = _match2;
+          }
+          _match = highlight ? record.replace(query, mark(query, highlight)) : record;
+          _match2 = _match;
+        }
+      });
+      return _match2;
     } else {
-      var _match = nRecord.indexOf(query);
-      if (~_match) {
-        query = record.substring(_match, _match + query.length);
-        _match = highlight ? record.replace(query, mark(query, highlight)) : record;
-        return _match;
+      var _match3 = nRecord.indexOf(query);
+      if (~_match3) {
+        query = record.substring(_match3, _match3 + query.length);
+        _match3 = highlight ? record.replace(query, mark(query, highlight)) : record;
+        return _match3;
       }
     }
   });
@@ -299,6 +317,7 @@
     var data = ctx.data,
         searchEngine = ctx.searchEngine;
     var matches = [];
+    if (typeof data.store === 'undefined') data.store = [];
     data.store.forEach(function (value, index) {
       var find = function find(key) {
         var record = key ? value[key] : value;
@@ -480,7 +499,9 @@
           }
         }, $error);
       } else {
-        close(ctx);
+        if (ctx.autoClose) {
+          close(ctx);
+        }
         return $If_1.call(_this);
       }
       function $If_1() {

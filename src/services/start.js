@@ -27,6 +27,8 @@ export default async function (ctx, q) {
     if (ctx.resultsList) render(ctx);
   } else {
     // Close open list
-    close(ctx);
+    if (ctx.autoClose) {
+      close(ctx);
+    }
   }
 }

@@ -29,7 +29,7 @@ const findMatches = (query, ctx) => {
   const { data, searchEngine } = ctx;
 
   let matches = [];
-
+  if ( typeof data.store === 'undefined') data.store = [];
   // Find matches from data source
   data.store.forEach((value, index) => {
     const find = (key) => {

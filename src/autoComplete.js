@@ -12,6 +12,7 @@ import init from "./services/init";
  * @param {Object} config - Configuration options.
  * @param {Number|String} [config.id] - Auto assigned instance unique identifier.
  * @param {String} [config.name=autoComplete] - Prepended to all created DOM element class names.
+ * @param {Boolean} [config.autoClose=true] - Disables auto close of resultlist.
  * @param {(String|Function)} [config.selector=#autoComplete] - Must point to or return the relevant input field or element that autoComplete.js should act upon.
  * @param {Object} config.data - Data source.
  * @param {(String[]|Object[]|Function)} config.data.src - Values to search or an async or immediate function that returns an array of values to search.
